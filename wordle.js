@@ -1,17 +1,17 @@
 
 let data;
-let dictionary;
+let dictionary =["bumba", "spele", "lampa", "polis"];
 let currentWord;
-
+ 
 // word access
 window.onload = async function () {
-  var currentWord = {word: ''};
+
   fetchWords();
-  
+ window.alert(currentWord);
   createSquares();
   function createSquares() {
       const gameBoard = document.getElementById("board")
-      for (let index = 0; index < 20; index++) {
+      for (let index = 0; index < 25; index++) {
           let square = document.createElement("div")
           square.classList.add("square");
           square.setAttribute("id", index+1);
@@ -22,21 +22,20 @@ window.onload = async function () {
     const button = document.getElementById("dog");
     button.innerText = "Loading...";
     button.disabled = true;
-  const res =["koks", "cuka", "apse", "vaks"];
-    const data = res.json();
-    dictionary = data.dictionary;
-    button.innerText = "Start Over";
-    button.disabled = false;
+  
+    
+    //dictionary = data.dictionary;
+//    button.innerText = dictionary[Math.floor(Math.random() * dictionary.length)];
+            button.disabled = false;
     loader();
   }
 
   function loader(){
+      
     currentWord = dictionary[Math.floor(Math.random() * dictionary.length)];
-    currentWord.word = currentWord.word.toUpperCase();
-    const wordElement = document.getElementById("word");
-    wordElement.textContent = currentWord.word;
-    const wordElement2 = document.getElementById("word2");
-    wordElement2.textContent = currentWord.word;
+    currentWord = currentWord.toUpperCase();
+    
+ 
   }
 
 // Colour and worlde playablility
@@ -50,36 +49,40 @@ square.style.border = "2px solid rgb(110, 61, 8)";
 document.addEventListener("keyup", function(event) {
   let square = document.querySelector(`.square[id='${i}']`);
   if (event.key === "Enter") {
-    if (squaresFilled === 4) {
-      if (currentRow < 3) {
+    if (squaresFilled === 5) {
+      if (currentRow < 4) {
         let squareNext = document.querySelector(`.square[id='${i}']`);
         squareNext.style.border = "2px solid rgb(110, 61, 8)";
       }
-      if (currentRow < 3){
-        let lastSquare1 = document.querySelector(`.square[id='${4}']`);
-        let lastSquare2 = document.querySelector(`.square[id='${8}']`);
-        let lastSquare3 = document.querySelector(`.square[id='${12}']`);
+      if (currentRow < 4){
+        let lastSquare1 = document.querySelector(`.square[id='${5}']`);
+        let lastSquare2 = document.querySelector(`.square[id='${10}']`);
+        let lastSquare3 = document.querySelector(`.square[id='${15}']`);
+        let lastSquare4 = document.querySelector(`.square[id='${20}']`);
         lastSquare1.style.border = "2px solid rgb(158, 158, 158)";
         lastSquare2.style.border = "2px solid rgb(158, 158, 158)";
         lastSquare3.style.border = "2px solid rgb(158, 158, 158)";
+        lastSquare4.style.border = "2px solid rgb(158, 158, 158)";
 
       }
       for (var k = 0; k < squaresFilled; k++) {
-          let square = document.querySelector(`.square[id='${k + 1 + (currentRow * 4)}']`);
-          if (square.textContent === currentWord.word[k]) {
+          let square = document.querySelector(`.square[id='${k + 1 + (currentRow * 5)}']`);
+          if (square.textContent === currentWord[k]) {
             square.classList.add("green-back");}
-          else if (currentWord.word.indexOf(square.textContent) !== -1) {
+          else if (currentWord.indexOf(square.textContent) !== -1) {
               square.classList.add("yellow-back");}
           else {
             square.classList.add("grey-back");}
         }
-        let square1 = document.querySelector(`.square[id='${1 + (currentRow * 4)}']`);
-        let square2 = document.querySelector(`.square[id='${2 + (currentRow * 4)}']`);
-        let square3 = document.querySelector(`.square[id='${3 + (currentRow * 4)}']`);
-        let square4 = document.querySelector(`.square[id='${4 + (currentRow * 4)}']`);
-        if (square1.textContent + square2.textContent + square3.textContent + square4.textContent === currentWord.word) {
-            let lastSquare4 = document.querySelector(`.square[id='${16}']`);
-            lastSquare4.style.border = "2px solid rgb(158, 158, 158)";
+        let square1 = document.querySelector(`.square[id='${1 + (currentRow * 5)}']`);
+        let square2 = document.querySelector(`.square[id='${2 + (currentRow * 5)}']`);
+        let square3 = document.querySelector(`.square[id='${3 + (currentRow * 5)}']`);
+        let square4 = document.querySelector(`.square[id='${4 + (currentRow * 5)}']`);
+        let square5 = document.querySelector(`.square[id='${5 + (currentRow * 5)}']`);
+        //sis suds parbauda vai tava current rakstisanas rinda vards sakrit ar atbildi un ja jā tad parāda win screen
+        if (square1.textContent + square2.textContent + square3.textContent + square4.textContent + square5.textContent === currentWord) {
+            let lastSquare5 = document.querySelector(`.square[id='${20}']`);
+            lastSquare5.style.border = "2px solid rgb(158, 158, 158)";
             hintarea.style.display = "none";
             hintText.textContent = "";
             document.getElementById("board").style.display = "none";
@@ -87,9 +90,10 @@ document.addEventListener("keyup", function(event) {
             document.getElementById("button").style.display = "none";
             winScreen.classList.add("win-active");
         }
-        if (currentRow == 3 && square1.textContent + square2.textContent + square3.textContent + square4.textContent !== currentWord.word) {
-            let lastSquare4 = document.querySelector(`.square[id='${16}']`);
-            lastSquare4.style.border = "2px solid rgb(158, 158, 158)";
+        //sis suds parbauda vai tava current rakstisanas rinda vards nesakrīt
+        if (currentRow === 4 && square1.textContent + square2.textContent + square3.textContent + square4.textContent + square5.textContent!== currentWord) {
+            let lastSquare5 = document.querySelector(`.square[id='${20}']`);
+            lastSquare5.style.border = "2px solid rgb(158, 158, 158)";
             hintarea.style.display = "none";
             hintText.textContent = "";
             loseScreen.classList.add("lose-active");
@@ -98,7 +102,7 @@ document.addEventListener("keyup", function(event) {
         currentRow++;
         squaresFilled = 0;
     }
-    else if (squaresFilled < 4){
+    else if (squaresFilled < 5){
       window.alert("first complete the word");
       return;
     }}
@@ -111,7 +115,7 @@ document.addEventListener("keyup", function(event) {
         square.classList.remove("green-back");
         square.classList.remove("yellow-back");
         square.classList.remove("grey-back");
-        if (squaresFilled < 4){
+        if (squaresFilled < 5){
           squareNext = document.querySelector(`.square[id='${i+1}']`);
           squareNext.style.border = "2px solid rgb(158, 158, 158)";
           squareBack = document.querySelector(`.square[id='${i}']`);
@@ -119,11 +123,11 @@ document.addEventListener("keyup", function(event) {
         }
     }
   }
-  else if (square && squaresFilled < 4 && event.key.match(/^[0-9a-z]+$/)) {
+  else if (square && squaresFilled < 5 && event.key.match(/^[0-9a-z]+$/)) {
     square.textContent = event.key.toUpperCase();
     i++;
     squaresFilled++;
-    if (squaresFilled < 4){
+    if (squaresFilled < 5){
       square.style.border = "2px solid rgb(158, 158, 158)";
       squareNext = document.querySelector(`.square[id='${i}']`);
       squareNext.style.border = "2px solid rgb(110, 61, 8)";
@@ -136,7 +140,7 @@ document.addEventListener("keyup", function(event) {
 const keyDisplay = document.getElementById("keyboard");
 keyDisplay.style.display = "none";
 document.addEventListener("keydown", function(event) {
-  if (event.key === "Enter"|| event.key === "Backspace" || squaresFilled < 4 && event.key.match(/^[0-9a-z]+$/)) {
+  if (event.key === "Enter"|| event.key === "Backspace" || squaresFilled < 5 && event.key.match(/^[0-9a-z]+$/)) {
       keyDisplay.style.display = "flex";
       if (event.key === "Enter") {
           keyDisplay.innerHTML = "&#8617;";}
