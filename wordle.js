@@ -7,18 +7,19 @@ let currentWord;
 window.onload = async function () {
 
   fetchWords();
- window.alert(currentWord);
+ window.alert("Read how to play before clicking 'OK!' ");
   createSquares();
   function createSquares() {
-      const gameBoard = document.getElementById("board")
+      const gameBoard = document.getElementById("board");
       for (let index = 0; index < 25; index++) {
-          let square = document.createElement("div")
+          let square = document.createElement("div");
           square.classList.add("square");
           square.setAttribute("id", index+1);
           gameBoard.appendChild(square);
       }
   }
   async function fetchWords() {
+      
     const button = document.getElementById("dog");
     button.innerText = "Loading...";
     button.disabled = true;
@@ -37,7 +38,7 @@ window.onload = async function () {
     
  
   }
-
+  
 // Colour and worlde playablility
 let i = 1;
 let squaresFilled = 0;
@@ -90,7 +91,7 @@ document.addEventListener("keyup", function(event) {
             document.getElementById("button").style.display = "none";
             winScreen.classList.add("win-active");
         }
-        //sis suds parbauda vai tava current rakstisanas rinda vards nesakrīt
+        //sis suds parbauda vai tava pedeja minejuma vards nesakrit tad parada lose screeen
         if (currentRow === 4 && square1.textContent + square2.textContent + square3.textContent + square4.textContent + square5.textContent!== currentWord) {
             let lastSquare5 = document.querySelector(`.square[id='${20}']`);
             lastSquare5.style.border = "2px solid rgb(158, 158, 158)";
@@ -156,11 +157,13 @@ document.addEventListener("keydown", function(event) {
 
 // Start Over
 const startOverButton = document.getElementById("button");
-const winRestartButton = document.querySelector(".restart")
+const winRestartButton = document.querySelector(".restart");
 startOverButton.addEventListener("click", resetGame);
 winRestartButton.addEventListener("click", resetGame);
 
 function resetGame(event) {
+    
+    console.log("tava mamma");
   startOverButton.blur();
        startOverButton.addEventListener("keydown", function(event) {
            if (event.key === "Enter") {
@@ -172,7 +175,7 @@ function resetGame(event) {
   if (event.target.tagName === "BUTTON") {
     winScreen.classList.remove("win-active");
     loseScreen.classList.remove("lose-active");
-
+     skaita();
   const squares = document.querySelectorAll(".square");
   squares.forEach(square => {
     square.style.border = "2px solid rgb(158, 158, 158)";
@@ -180,7 +183,7 @@ function resetGame(event) {
     square.classList.remove("green-back");
     square.classList.remove("yellow-back");
     square.classList.remove("grey-back");
-    const hintarea = document.querySelector(".hint-screen")
+    const hintarea = document.querySelector(".hint-screen");
     hintarea.style.display = "none";
     document.getElementById("board").style.display = "grid";
     startOverButton.style.display = "flex";
@@ -229,7 +232,7 @@ if (mq.matches) {
 });
 
 // Hint
-const hintarea = document.querySelector(".hint-screen")
+const hintarea = document.querySelector(".hint-screen");
 const hintText = document.getElementById("hint-text");
 hintarea.style.display = "none";
 const hintbtn = document.getElementById("hint");
@@ -251,3 +254,32 @@ if (body.classList.contains("dark-mode")) {
 } else {
   body.classList.add("dark-mode");}
 });
+const loseScreen = document.querySelector(".lose-screen");
+var countDownDate, spele;
+            
+                countDownDate = new Date().getTime()+5000;
+                spele = setInterval(skaita, 1000);
+            
+        // Update the count down every 1 second
+            function skaita() {
+                
+                let now = new Date().getTime();
+                // Find the distance between now and the count down date
+                let distance = countDownDate - now;
+
+                // Time calculations for days, hours, minutes and seconds
+                let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Output the result in an element with id="demo"
+                document.getElementById("demo").innerHTML = minutes + "m " + seconds + "s ";
+
+                // If the count down is over, write some text 
+                if (distance < 0) {
+                    clearInterval(spele);
+                    document.getElementById("demo").innerHTML = "EXPIRED";
+                    
+            loseScreen.classList.add("lose-active");
+            return;
+                }
+            }
