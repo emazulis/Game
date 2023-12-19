@@ -36,7 +36,7 @@ window.onload = async function () {
 
   function loader(){
       
-    currentWord = dictionar      y[Math.floor(Math.random() * dictionary.length)];
+    currentWord = dictionary[Math.floor(Math.random() * dictionary.length)];
     currentWord = currentWord.toUpperCase();
     
  
